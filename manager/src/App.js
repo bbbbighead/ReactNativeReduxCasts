@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
+
+const middlewares = [ReduxThunk];
+const enhancer = composeWithDevTools({
+  // Options: https://github.com/jhen0409/react-native-debugger#options
+})(
+  applyMiddleware(...middlewares)
+);
 
 class App extends Component {
   componentWillMount() {
@@ -19,8 +27,9 @@ class App extends Component {
     firebase.initializeApp(config);
   }
 
+
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    const store = createStore(reducers, {}, enhancer);
 
     return (
       <Provider store={store}>

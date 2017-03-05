@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "eslint-config-rallycoding": "^3.1.0",
@@ -15,6 +16,10 @@
     "react-native-router-flux": "^3.35.0",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.0",
     "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "react-native-debugger-open": "^0.3.2"
   }
 }
