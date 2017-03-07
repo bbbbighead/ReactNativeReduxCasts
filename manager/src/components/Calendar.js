@@ -3,10 +3,13 @@ import {
   StyleSheet,
   Text,
   View,
+  ListView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import Calendar from 'react-native-calendar';
 import moment from 'moment';
+import { CardSection } from './common';
 
 const customDayHeadings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const customMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May',
@@ -36,6 +39,28 @@ class CalendarView extends Component {
     this.state = {
       selectedDate: moment().format(),
     };
+
+    this.createDataSource();
+  }
+
+  createDataSource() {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    this.dataSource = ds.cloneWithRows(['row 1', 'row 2']);
+  }
+
+  renderRow(item) {
+    return (
+      <View>
+        <CardSection>
+          <Text style={styles.titleStyle}>
+            {item}
+          </Text>
+        </CardSection>
+      </View>
+    );
   }
 
   render() {
@@ -59,8 +84,12 @@ class CalendarView extends Component {
           onSwipeNext={(e) => console.log('onSwipeNext', e)}
         />
         <Text>Selected Date: {moment(this.state.selectedDate).format('MMMM DD YYYY')}</Text>
+        <ListView
+          enableEmptySections
+          dataSource={this.dataSource}
+          renderRow={this.renderRow}
+        />
       </View>
-
     );
   }
 }
